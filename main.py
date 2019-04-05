@@ -2,22 +2,34 @@ from sorts import bubble, insertion_sort, selection_sort
 import sys  
 import os
 import csv
+import random
 
 registers = []
 def main():  
-    
+
+    registers = read_file()
+
+    print("Dados carregados e tratados com sucesso!\n")
+    print("O que deseja fazer com o vetor inicial?\n")
+    print("1 - Randomizar vetor")
+    print("2 - Ordem original do vetor")
+    opc = input()
+    if(opc == '1'):
+        registers = random_vector(registers)
+
     print("Qual ordenação deseja fazer?")
     print("1 - Selection Sort")
     print("2 - Insertion Sort")
     print("3 - Bubble Sort")
+    
     opc = input()
 
     if(opc == '1'):
-        print(selection_sort(read_file()))
+        print(selection_sort(registers))
     elif(opc == '2'):
-        print(insertion_sort(read_file()))
+        print(insertion_sort(registers))
     elif(opc == '3'):
-        print(bubble(read_file()))
+        print(bubble(registers))
     
 def read_file():
     filepath = 'registered0.csv'
@@ -38,5 +50,16 @@ def read_file():
            cnt += 1
     
     return registers
+
+def random_vector(lista):
+    tmp_regs = read_file()
+    lista = []
+    for count in tmp_regs:
+        choice = random.choice(tmp_regs)
+        if(lista.index != choice):
+            lista.append(choice)
+        else:
+            lista.append(random.choice(tmp_regs))
+    return lista
 
 main()
