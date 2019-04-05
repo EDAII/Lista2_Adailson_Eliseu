@@ -6,7 +6,18 @@ import csv
 registers = []
 def main():  
     
-    read_file()
+    print("Qual ordenação deseja fazer?")
+    print("1 - Selection Sort")
+    print("2 - Insertion Sort")
+    print("3 - Bubble Sort")
+    opc = input()
+
+    if(opc == '1'):
+        print(selection_sort(read_file()))
+    elif(opc == '2'):
+        print(insertion_sort(read_file()))
+    elif(opc == '3'):
+        print(bubble(read_file()))
     
 def read_file():
     filepath = 'registered0.csv'
