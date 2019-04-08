@@ -3,6 +3,7 @@ import sys
 import os
 import csv
 import random
+import time 
 
 registers = []
 def main():  
@@ -21,15 +22,51 @@ def main():
     print("1 - Selection Sort")
     print("2 - Insertion Sort")
     print("3 - Bubble Sort")
-    
     opc = input()
 
     if(opc == '1'):
-        print(selection_sort(registers))
+        print("Ordenar pelo nome ou pelo CPF?")
+        print("1 - Nome")
+        print("2 - CPF")
+        opc = int(input())
+        if(opc == 1):
+            count_sort()
+            start = time.time()
+            registers_sorted = selection_sort(registers)
+            end = time.time()
+            elapsed_time = end - start
+            sucess_menu(elapsed_time,registers_sorted)
+        else:
+            print("Fim")
+            return
     elif(opc == '2'):
-        print(insertion_sort(registers))
+        print("Ordenar pelo nome ou pelo CPF?")
+        print("1 - Nome")
+        print("2 - CPF")
+        opc = int(input())
+        if(opc == 1):
+            start = time.time()
+            registers_sorted = insertion_sort(registers)
+            end = time.time()
+            elapsed_time = end - start
+            sucess_menu(elapsed_time,registers_sorted)
+        else:
+            print("Fim")
+            return
     elif(opc == '3'):
-        print(bubble(registers))
+        print("Ordenar pelo nome ou pelo CPF?")
+        print("1 - Nome")
+        print("2 - CPF")
+        opc = int(input())
+        if(opc == 1):
+            start = time.time()
+            registers_sorted = bubble(registers)
+            end = time.time()
+            elapsed_time = end - start
+            sucess_menu(elapsed_time,registers_sorted)
+        else:
+            print("Fim")
+            return
     
 def read_file():
     filepath = 'registered0.csv'
@@ -62,4 +99,16 @@ def random_vector(lista):
             lista.append(random.choice(tmp_regs))
     return lista
 
+def sucess_menu(elapsed_time, registers_sorted):
+    print('Ordenado com sucesso!')
+    print('Tempo para realizar ordenação: ', elapsed_time)
+    print('Deseja mostrar lista ordenada?')
+    print("1 - Sim")
+    print("2 - Não")
+    opc = int(input())
+    if(opc == 1):
+        print(registers_sorted)
+    else:
+        print("Fim")
+        return
 main()
