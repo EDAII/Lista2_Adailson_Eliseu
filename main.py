@@ -8,7 +8,8 @@ import time
 registers = []
 def main():  
 
-    registers = read_file()
+    registers_name = read_file_by_name()
+    registers_cpf = read_file_by_cpf()
 
     print("Dados carregados e tratados com sucesso!\n")
     print("O que deseja fazer com o vetor inicial?\n")
@@ -16,8 +17,8 @@ def main():
     print("2 - Ordem original do vetor")
     opc = input()
     if(opc == '1'):
-        registers = random_vector(registers)
-
+        registers_name = random_vector(registers_name)
+        registers_cpf = random_vector(registers_cpf)
     print("Qual ordenação deseja fazer?")
     print("1 - Selection Sort")
     print("2 - Insertion Sort")
@@ -30,9 +31,14 @@ def main():
         print("2 - CPF")
         opc = int(input())
         if(opc == 1):
-            count_sort()
             start = time.time()
-            registers_sorted = selection_sort(registers)
+            registers_sorted = selection_sort(registers_name)
+            end = time.time()
+            elapsed_time = end - start
+            sucess_menu(elapsed_time,registers_sorted)
+        elif (opc == 2):
+            start = time.time()
+            registers_sorted = selection_sort(registers_cpf)
             end = time.time()
             elapsed_time = end - start
             sucess_menu(elapsed_time,registers_sorted)
@@ -46,7 +52,13 @@ def main():
         opc = int(input())
         if(opc == 1):
             start = time.time()
-            registers_sorted = insertion_sort(registers)
+            registers_sorted = insertion_sort(registers_name)
+            end = time.time()
+            elapsed_time = end - start
+            sucess_menu(elapsed_time,registers_sorted)
+        elif(opc == 2):
+            start = time.time()
+            registers_sorted = insertion_sort(registers_cpf)
             end = time.time()
             elapsed_time = end - start
             sucess_menu(elapsed_time,registers_sorted)
@@ -60,7 +72,13 @@ def main():
         opc = int(input())
         if(opc == 1):
             start = time.time()
-            registers_sorted = bubble(registers)
+            registers_sorted = bubble(registers_name)
+            end = time.time()
+            elapsed_time = end - start
+            sucess_menu(elapsed_time,registers_sorted)
+        elif(opc == 2):
+            start = time.time()
+            registers_sorted = bubble(registers_cpf)
             end = time.time()
             elapsed_time = end - start
             sucess_menu(elapsed_time,registers_sorted)
@@ -68,7 +86,24 @@ def main():
             print("Fim")
             return
     
-def read_file():
+def read_file_by_name():
+    filepath = 'registered0.csv'
+    registers = []
+    if not os.path.isfile(filepath):
+       print("O Arquivo {} não foi encontrado.".format(filepath))
+       sys.exit()
+
+    with open(filepath) as fp:
+       for line in fp:
+           # Tratamento para formato nome completo
+           line = line.replace('"','',len(line))
+           line = line.split(',') 
+           line = (line[1][1:] + line[2] + line[3][:-1])
+           registers.append(line)
+
+    return registers
+
+def read_file_by_cpf():
     filepath = 'registered0.csv'
     registers = []
     if not os.path.isfile(filepath):
@@ -81,9 +116,9 @@ def read_file():
            # Tratamento para formato nome completo
            line = line.replace('"','',len(line))
            line = line.split(',') 
-           line = (line[1][1:] + line[2] + line[3][:-1])
+           line = (line[0])
            registers.append(line)
-           #print("Linha {} contém {}".format(cnt, line))
+           print("Linha {} contém {}".format(cnt, line))
            cnt += 1
     
     return registers
